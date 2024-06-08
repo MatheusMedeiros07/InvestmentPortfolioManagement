@@ -9,6 +9,12 @@ using InvestmentPortfolioManagement.Services;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using InvestmentPortfolioManagement.Repositories;
 using InvestmentPortfolioManagement.Repositories.Interfaces;
+using InvestmentPortfolioManagement.Configuration;
+using Quartz;
+using Quartz.Spi;
+using Quartz.Impl;
+using InvestmentPortfolioManagement.Jobs;
+using Quartz.Simpl;
 
 public class Startup
 {
@@ -23,29 +29,39 @@ public class Startup
     {
         services.AddControllers();
 
-        // Add DbContext with InMemory database
+        // Configure EmailSettings
+        services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+        services.AddScoped<IEmailService, EmailService>();
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("InvestmentPortfolioDb"));
 
-        // Add services
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IInvestmentService, InvestmentService>();
 
-        // Add repositories
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IInvestmentRepository, InvestmentRepository>();
 
-        // Add AutoMapper
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        // Add Swagger
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "InvestmentPortfolioAPI", Version = "v1" });
         });
+
+        // Add Quartz
+        services.AddQuartz(q =>
+        {
+            q.UseJobFactory<MicrosoftDependencyInjectionJobFactory>();
+        });
+
+        services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+        services.AddSingleton<EmailNotificationJob>();
     }
+
+
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
