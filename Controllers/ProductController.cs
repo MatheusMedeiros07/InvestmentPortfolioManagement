@@ -1,7 +1,9 @@
 using AutoMapper;
 using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestmentPortfolioManagement.Controllers
 {
@@ -29,6 +31,5 @@ namespace InvestmentPortfolioManagement.Controllers
             await _productService.AddProductAsync(productDto);
             return CreatedAtAction(nameof(GetAllProducts), new { id = productDto.Id }, productDto);
         }
-
     }
 }

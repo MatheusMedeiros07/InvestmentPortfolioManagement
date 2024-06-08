@@ -6,6 +6,7 @@ using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Repositories;
 using InvestmentPortfolioManagement.Repositories.Interfaces;
 using InvestmentPortfolioManagement.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvestmentPortfolioManagement.Services
 {
@@ -31,6 +32,12 @@ namespace InvestmentPortfolioManagement.Services
             var product = _mapper.Map<Product>(productDto);
             await _productRepository.AddAsync(product);
             productDto.Id = product.Id; // Atualiza o ID no DTO
+        }
+
+        public async Task <List<ProductDto>> GetProductsNearExpiry(int days)
+        {
+            var products = await _productRepository.GetProductsNearExpiryAsync(days);
+            return _mapper.Map<List<ProductDto>>(products);
         }
     }
 }

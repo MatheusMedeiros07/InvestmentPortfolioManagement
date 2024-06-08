@@ -8,5 +8,6 @@ namespace InvestmentPortfolioManagement.Repositories.Interfaces
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task AddAsync(Product product);
+        Task<IEnumerable<Product>> GetProductsNearExpiryAsync(int days);
     }
 }

@@ -58,7 +58,7 @@ public class Startup
         });
 
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
-        services.AddSingleton<EmailNotificationJob>();
+        services.AddScoped<EmailNotificationJob>();
     }
 
 

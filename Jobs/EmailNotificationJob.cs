@@ -1,33 +1,30 @@
-﻿using System;
+﻿using Quartz;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Quartz;
 using InvestmentPortfolioManagement.Services.Interfaces;
 
 namespace InvestmentPortfolioManagement.Jobs
 {
     public class EmailNotificationJob : IJob
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IEmailService _emailService;
 
-        public EmailNotificationJob(IServiceProvider serviceProvider)
+        public EmailNotificationJob(IEmailService emailService)
         {
-            _serviceProvider = serviceProvider;
+            _emailService = emailService;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            using (var scope = _serviceProvider.CreateScope())
+            List<string> adminEmails = new List<string>
             {
-                var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
+                "matheusmedeiroswf@gmail.com",
+                "matheusmedeirosfps@gmail.com"
+                // Adicione mais e-mails de administradores conforme necessário
+            };
 
-                // Obter a lista de e-mails dos administradores (exemplo)
-                var adminEmails = new List<string> { "matheusmedeiroswf@gmail.com", "matheusmedeirosfps@gmail.com" };
-
-                // Chamar o método para enviar notificações diárias por e-mail
-                await emailService.SendDailyNotificationsAsync(adminEmails);
-            }
+            await _emailService.SendDailyNotificationsAsync(adminEmails);
         }
     }
 }
