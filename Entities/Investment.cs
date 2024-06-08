@@ -1,7 +1,10 @@
-﻿namespace InvestmentPortfolioManagement.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace InvestmentPortfolioManagement.Entities
 {
     public class Investment
     {
+        [Key]
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int CustomerId { get; set; }
