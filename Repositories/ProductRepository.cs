@@ -26,5 +26,11 @@ namespace InvestmentPortfolioManagement.Repositories
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Product>> GetProductsNearExpiryAsync(int days)
+        {
+            var thresholdDate = DateTime.Now.AddDays(days);
+            return await _context.Products.Where(p => p.ExpirationDate <= thresholdDate).OrderBy(p => p.ExpirationDate).ToListAsync();
+        }
     }
 }
