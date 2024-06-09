@@ -7,7 +7,7 @@ namespace InvestmentPortfolioManagement.Repositories.Interfaces
 
     public interface IInvestmentRepository
     {
-        Task<IEnumerable<Investment>> GetAllAsync();
+        Task<IEnumerable<Investment>> GetInvestmentsByCustomerIdAsync(int customerId);
         Task AddAsync(Investment investment);
     }
 }

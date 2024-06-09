@@ -1,12 +1,12 @@
-﻿namespace InvestmentPortfolioManagement.Dtos.Investment
+﻿using InvestmentPortfolioManagement.Dtos.Customer;
+using InvestmentPortfolioManagement.Dtos.Product;
+
+namespace InvestmentPortfolioManagement.Dtos.Investment
 {
-    public class InvestmentDto
+    public class InvestmentDto : InvestmentBaseDto
     {
         public int? Id { get; set; }
-        public int ProductId { get; set; }
-        public int CustomerId { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime Date { get; set; }
+
 
     }
 }

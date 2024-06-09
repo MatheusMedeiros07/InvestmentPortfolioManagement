@@ -5,7 +5,7 @@ namespace InvestmentPortfolioManagement.Services.Interfaces
 {
     public interface IInvestmentService
     {
-        Task<IEnumerable<InvestmentDto>> GetAllInvestmentsAsync();
+        Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id);
         Task AddInvestmentAsync(InvestmentDto investmentDto);
     }
 }

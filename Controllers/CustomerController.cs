@@ -42,7 +42,7 @@ namespace InvestmentPortfolioManagement.Controllers
         public async Task<ActionResult> AddCustomer(CustomerInsertDto customerDto)
         {
             var result = await _customerService.AddCustomerAsync(customerDto);
-            return CreatedAtAction(nameof(GetAllCustomers), new { id = result.Id }, customerDto);
+            return CreatedAtAction(nameof(AddCustomer), new { id = result.Id }, customerDto);
         }
 
         [HttpPut("{id}")]

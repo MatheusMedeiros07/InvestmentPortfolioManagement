@@ -36,7 +36,7 @@ namespace InvestmentPortfolioManagement.Controllers
         public async Task<ActionResult> AddProduct([FromBody] ProductInsertDto productDto)
         {
             var result = await _productService.AddProductAsync(productDto);
-            return CreatedAtAction(nameof(GetAllProducts), new { id = result.Id }, result);
+            return CreatedAtAction(nameof(AddProduct), new { id = result.Id }, result);
         }
 
         [HttpDelete("{id}")]
