@@ -6,8 +6,8 @@ using System.Net.Mail;
 using System.Text;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using Microsoft.Extensions.Options;
-using InvestmentPortfolioManagement.Dtos;
 using InvestmentPortfolioManagement.Configuration;
+using InvestmentPortfolioManagement.Dtos.Product;
 
 namespace InvestmentPortfolioManagement.Services
 {

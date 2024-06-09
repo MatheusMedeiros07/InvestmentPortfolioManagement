@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Product;
 using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Repositories;
 using InvestmentPortfolioManagement.Repositories.Interfaces;
@@ -27,11 +27,11 @@ namespace InvestmentPortfolioManagement.Services
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
-        public async Task AddProductAsync(ProductDto productDto)
+        public async Task<Product> AddProductAsync(ProductInsertDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
-            await _productRepository.AddAsync(product);
-            productDto.Id = product.Id; // Atualiza o ID no DTO
+            return await _productRepository.AddAsync(product);
+            //productDto.Id = product.Id; // Atualiza o ID no DTO
         }
 
         public async Task<ProductDto> EditProductAsync(int id, ProductUpdateDto productDto)
