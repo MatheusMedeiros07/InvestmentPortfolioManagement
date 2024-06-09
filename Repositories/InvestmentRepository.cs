@@ -15,16 +15,31 @@ namespace InvestmentPortfolioManagement.Repositories
             _context = context;
         }
 
+        public async Task<Investment> GetInvestmentByIdAsync(int id)
+        {
+            return await _context.Investments
+            .Include(i => i.Product)  // Inclui o Product
+            .FirstOrDefaultAsync(i => i.Id == id);
+        }
+
         public async Task<IEnumerable<Investment>> GetInvestmentsByCustomerIdAsync(int customerId)
         {
             return await _context.Investments
-                .Where(i => i.CustomerId == customerId)
-                .ToListAsync();
+            .Include(i => i.Product)  // Inclui o Product
+            .Where(i => i.CustomerId == customerId)
+            .ToListAsync();
         }
 
-        public async Task AddAsync(Investment investment)
+        public async Task<bool> AddInvestmentAsync(Investment investment)
         {
-            await _context.Investments.AddAsync(investment);
+            _context.Investments.Add(investment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task UpdateInvestmentAsync(Investment investment)
+        {
+            _context.Investments.Update(investment);
             await _context.SaveChangesAsync();
         }
     }

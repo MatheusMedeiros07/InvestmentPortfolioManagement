@@ -80,5 +80,12 @@ public class Startup
         {
             endpoints.MapControllers();
         });
+
+        // Chama o método de seed data para inserir dados iniciais
+        using (var serviceScope = app.ApplicationServices.CreateScope())
+        {
+            var services = serviceScope.ServiceProvider;
+            SeedData.Initialize(services);
+        }
     }
 }
