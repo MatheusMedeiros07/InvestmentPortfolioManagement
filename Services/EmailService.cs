@@ -66,7 +66,7 @@ namespace InvestmentPortfolioManagement.Services
         {
             var sb = new StringBuilder();
             sb.Append("<h2>Olá Administradores do Sistema de Gestão de Portfólio de Investimentos.</h2>");
-            sb.Append("<h2>Segue abaixo o Relatório contendo os produtos que vão expirar nós próximos 7 dias! Atenção, fique atento aos prazos de expiração.</h2>");
+            sb.Append("<h3>Segue abaixo o Relatório contendo os produtos que vão expirar nós próximos 7 dias! Atenção, fique atento aos prazos de expiração.</h2>/n");
             sb.Append("<table style='border-collapse: collapse; width: 100%;'>");
             sb.Append("<tr>");
             sb.Append("<th style='border: 1px solid black; padding: 8px;'>Nome</th>");
@@ -77,7 +77,7 @@ namespace InvestmentPortfolioManagement.Services
             {
                 sb.Append("<tr>");
                 sb.Append($"<td style='border: 1px solid black; padding: 8px;'>{product.Name}</td>");
-                sb.Append($"<td style='border: 1px solid black; padding: 8px;'>{product.ExpirationDate:yyyy-MM-dd}</td>");
+                sb.Append($"<td style='border: 1px solid black; padding: 8px;'>{product.ExpirationDate:dd-MM-yyyy}</td>");
                 sb.Append("</tr>");
             }
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Data;
 using InvestmentPortfolioManagement.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InvestmentPortfolioManagement.Repositories
 {
@@ -21,9 +22,28 @@ namespace InvestmentPortfolioManagement.Repositories
             return await _context.Products.ToListAsync();
         }
 
+        public async Task<Product> GetProductByIdAsync(int productId)
+        {
+           return await _context.Products.FindAsync(productId);
+        }
+
         public async Task AddAsync(Product product)
         {
             await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> EditProductAsync(Product existingProduct, Product product)
+        {
+                // Marca a entidade como modificada
+                _context.Entry(existingProduct).CurrentValues.SetValues(product);
+                await _context.SaveChangesAsync();
+                return true;
+        }
+
+        public async Task DeleteProductByIdAsync(Product product)
+        {
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
 
