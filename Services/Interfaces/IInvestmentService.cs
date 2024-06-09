@@ -5,7 +5,7 @@ namespace InvestmentPortfolioManagement.Services.Interfaces
 {
     public interface IInvestmentService
     {
-        Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id);
+        Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id, bool? isActive);
         Task<bool> CreateInvestmentAsync(InvestmentCreateDto investmentCreateDto);
 
         Task<InvestmentDto> SellInvestmentAsync(int investmentId);

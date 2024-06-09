@@ -19,15 +19,21 @@ namespace InvestmentPortfolioManagement.Repositories
         {
             return await _context.Investments
             .Include(i => i.Product)  // Inclui o Product
-            .FirstOrDefaultAsync(i => i.Id == id);
+            .FirstAsync(i => i.Id == id);
         }
 
-        public async Task<IEnumerable<Investment>> GetInvestmentsByCustomerIdAsync(int customerId)
+        public async Task<IEnumerable<Investment>> GetInvestmentsByCustomerIdAsync(int customerId, bool? isActive)
         {
-            return await _context.Investments
-            .Include(i => i.Product)  // Inclui o Product
-            .Where(i => i.CustomerId == customerId)
-            .ToListAsync();
+            var query = _context.Investments
+           .Include(i => i.Product)
+           .Where(i => i.CustomerId == customerId);
+
+            if (isActive.HasValue)
+            {
+                query = query.Where(i => i.IsActive == isActive.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<bool> AddInvestmentAsync(Investment investment)
