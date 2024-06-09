@@ -27,11 +27,19 @@ namespace InvestmentPortfolioManagement.Services
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
+        public async Task<ProductDto> GetProductByIdAsync(int id)
+        {
+            var product = await _productRepository.GetProductByIdAsync(id);
+            if (product == null)
+                throw new ArgumentNullException($"O produto com ID: {id} não foi encontrado");
+
+            return _mapper.Map<ProductDto>(product);
+        }
+
         public async Task<Product> AddProductAsync(ProductInsertDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
             return await _productRepository.AddAsync(product);
-            //productDto.Id = product.Id; // Atualiza o ID no DTO
         }
 
         public async Task<ProductDto> EditProductAsync(int id, ProductUpdateDto productDto)
@@ -41,17 +49,11 @@ namespace InvestmentPortfolioManagement.Services
                 throw new ArgumentNullException($"O produto com ID: {id} não foi encontrado");
 
             var productUpdate = _mapper.Map<Product>(productDto, opts => opts.Items["Id"] = id);
-            var result = await _productRepository.EditProductAsync(existingProduct, productUpdate);
-            if (result)
-            {
-                return _mapper.Map<ProductDto>(await _productRepository.GetProductByIdAsync(id));
-            }
-            else
-            {
+            var sucess = await _productRepository.EditProductAsync(existingProduct, productUpdate);
+            if (sucess)
                 throw new Exception("Erro ao atualizar o produto");
-            }
-            
 
+            return _mapper.Map<ProductDto>(await _productRepository.GetProductByIdAsync(id));
         }
 
         public async Task<bool> DeleteProductAsync(int productId)
