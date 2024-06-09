@@ -203,6 +203,7 @@ O serviço de e-mail é configurado no arquivo `appsettings.json`:
 }
 ```
 
+
 ### Exemplo de Configuração
 
 No `Startup.cs`, o serviço de e-mail é configurado da seguinte forma:
@@ -230,6 +231,54 @@ services.AddQuartz(q =>
 
 services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 ```
+
+### Explicação da Cron Job
+
+A cron job configurada acima utiliza uma expressão cron para definir a frequência de execução do job de notificação por e-mail. A expressão cron `0 */5 * * * ?` pode ser lida da seguinte maneira:
+
+- `0`: Segundo (sempre no segundo zero).
+- `*/5`: Minuto (a cada 5 minutos).
+- `*`: Hora (qualquer hora).
+- `*`: Dia do mês (qualquer dia).
+- `*`: Mês (qualquer mês).
+- `?`: Dia da semana (ignorado).
+
+Ou seja, a expressão `0 */5 * * * ?` indica que o job deve ser executado a cada 5 minutos.
+
+### Exemplo para Executar a Cada 1 Minuto
+
+Para configurar o job para ser executado a cada 1 minuto, você deve usar a seguinte expressão cron:
+
+```csharp
+.WithCronSchedule("0 * * * * ?")
+```
+
+Explicação:
+- `0`: Segundo (sempre no segundo zero).
+- `*`: Minuto (a cada minuto).
+- `*`: Hora (qualquer hora).
+- `*`: Dia do mês (qualquer dia).
+- `*`: Mês (qualquer mês).
+- `?`: Dia da semana (ignorado).
+
+### Exemplo para Executar a Cada 24 Horas
+
+Para configurar o job para ser executado a cada 24 horas, você deve usar a seguinte expressão cron:
+
+```csharp
+.WithCronSchedule("0 0 0 * * ?")
+```
+
+Explicação:
+- `0`: Segundo (sempre no segundo zero).
+- `0`: Minuto (sempre no minuto zero).
+- `0`: Hora (meia-noite).
+- `*`: Dia do mês (qualquer dia).
+- `*`: Mês (qualquer mês).
+- `?`: Dia da semana (ignorado).
+
+Com essas configurações, você pode ajustar a frequência de execução do job de notificação por e-mail conforme necessário.
+
 
 ## Erros Comuns
 
