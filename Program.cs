@@ -12,7 +12,7 @@ public class Program
     {
 
         // Chama o teste SMTP
-        //SmtpTest.RunTest();
+        SmtpTest.RunTest();
 
         var host = CreateHostBuilder(args).Build();
 
