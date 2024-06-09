@@ -31,5 +31,30 @@ namespace InvestmentPortfolioManagement.Controllers
             await _productService.AddProductAsync(productDto);
             return CreatedAtAction(nameof(GetAllProducts), new { id = productDto.Id }, productDto);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProductById(int id)
+        {
+            var result = await _productService.DeleteProductAsync(id);
+            if(!result)
+                return NotFound(new { message = "Produto não encontrado" });
+
+
+            return Ok(new { message = "Produto excluído com sucesso" });
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditProduct(int id, [FromBody] ProductUpdateDto productDto)
+        {
+
+            var updatedProduct = await _productService.EditProductAsync(id, productDto);
+
+            if (updatedProduct == null)
+            {
+                return NotFound(new { message = "Produto não foi encontrado" });
+            }
+
+            return Ok(updatedProduct);
+        }
     }
 }
