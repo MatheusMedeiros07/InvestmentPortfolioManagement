@@ -1,4 +1,6 @@
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Customer;
+using InvestmentPortfolioManagement.Dtos.Product;
+using InvestmentPortfolioManagement.Services;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,18 +17,47 @@ namespace InvestmentPortfolioManagement.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllCustomers")]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomers()
         {
             var customers = await _customerService.GetAllCustomersAsync();
             return Ok(customers);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddCustomer(CustomerDto customerDto)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CustomerDto>> GetCustomerById(int id)
         {
-            await _customerService.AddCustomerAsync(customerDto);
-            return CreatedAtAction(nameof(GetAllCustomers), new { id = customerDto.Id }, customerDto);
+            try
+            {
+                var customer = await _customerService.GetCustomerByIdAsync(id);
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddCustomer(CustomerInsertDto customerDto)
+        {
+            var result = await _customerService.AddCustomerAsync(customerDto);
+            return CreatedAtAction(nameof(GetAllCustomers), new { id = result.Id }, customerDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditCustomer(int id, [FromBody] CustomerUpdateDto customerDto)
+        {
+
+            try
+            {
+                var updatedCustomer = await _customerService.EditCustomerAsync(id, customerDto);
+                return Ok(updatedCustomer);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
     }
 }

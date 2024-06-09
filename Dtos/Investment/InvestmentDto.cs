@@ -1,4 +1,4 @@
-﻿namespace InvestmentPortfolioManagement.Dtos
+﻿namespace InvestmentPortfolioManagement.Dtos.Investment
 {
     public class InvestmentDto
     {
