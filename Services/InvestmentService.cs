@@ -26,14 +26,14 @@ namespace InvestmentPortfolioManagement.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id)
+        public async Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id, bool? isActive)
         {
-            var investments = await _investmentRepository.GetInvestmentsByCustomerIdAsync(id);
+            var investments = await _investmentRepository.GetInvestmentsByCustomerIdAsync(id, isActive);
             if (investments == null)
                 throw new KeyNotFoundException($"O Investmento do Cliente com ID: {id} não foi encontrado");
 
-            var result = _mapper.Map<IEnumerable<InvestmentDto>>(investments);
-            return result;
+            return _mapper.Map<IEnumerable<InvestmentDto>>(investments);
+          
         }
 
         public async Task<bool> CreateInvestmentAsync(InvestmentCreateDto investmentCreateDto)
