@@ -9,6 +9,8 @@ namespace InvestmentPortfolioManagement.Services.Interfaces
     {
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
         Task AddProductAsync(ProductDto productDto);
+        Task<bool> DeleteProductAsync(int productId);
+        Task<ProductDto> EditProductAsync(int id, ProductUpdateDto productDto);
         Task <List<ProductDto>> GetProductsNearExpiry(int days);
     }
 }
