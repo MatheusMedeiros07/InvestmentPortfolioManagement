@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using InvestmentPortfolioManagement.Dtos.Customer;
 using InvestmentPortfolioManagement.Dtos.Investment;
 using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Repositories;
@@ -21,9 +22,12 @@ namespace InvestmentPortfolioManagement.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<InvestmentDto>> GetAllInvestmentsAsync()
+        public async Task<IEnumerable<InvestmentDto>> GetAllInvestmentsByCustomerIdAsync(int id)
         {
-            var investments = await _investmentRepository.GetAllAsync();
+            var investments = await _investmentRepository.GetInvestmentsByCustomerIdAsync(id);
+            if (investments == null)
+                throw new KeyNotFoundException($"O Investmento do Cliente com ID: {id} não foi encontrado");
+
             return _mapper.Map<IEnumerable<InvestmentDto>>(investments);
         }
 

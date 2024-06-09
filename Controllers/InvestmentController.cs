@@ -15,10 +15,10 @@ namespace InvestmentPortfolioManagement.Controllers
             _investmentService = investmentService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<InvestmentDto>>> GetAllInvestments()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<InvestmentDto>>> GetAllInvestmentsByCustomerId(int id)
         {
-            var investments = await _investmentService.GetAllInvestmentsAsync();
+            var investments = await _investmentService.GetAllInvestmentsByCustomerIdAsync(id);
             return Ok(investments);
         }
 
@@ -26,7 +26,7 @@ namespace InvestmentPortfolioManagement.Controllers
         public async Task<ActionResult> AddInvestment(InvestmentDto investmentDto)
         {
             await _investmentService.AddInvestmentAsync(investmentDto);
-            return CreatedAtAction(nameof(GetAllInvestments), new { id = investmentDto.Id }, investmentDto);
+            return CreatedAtAction(nameof(AddInvestment), new { id = investmentDto.Id }, investmentDto);
         }
 
     }

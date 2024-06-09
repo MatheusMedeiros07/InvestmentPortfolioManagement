@@ -15,12 +15,11 @@ namespace InvestmentPortfolioManagement.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Investment>> GetAllAsync()
+        public async Task<IEnumerable<Investment>> GetInvestmentsByCustomerIdAsync(int customerId)
         {
             return await _context.Investments
-                                 .Include(i => i.Product)
-                                 .Include(i => i.Customer)
-                                 .ToListAsync();
+                .Where(i => i.CustomerId == customerId)
+                .ToListAsync();
         }
 
         public async Task AddAsync(Investment investment)

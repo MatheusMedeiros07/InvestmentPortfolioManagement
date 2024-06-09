@@ -67,6 +67,39 @@ namespace InvestmentPortfolioManagement.Data
                     .OnDelete(DeleteBehavior.Cascade); // Define o relacionamento com Investment
             });
 
+            // Configuração da entidade Investment
+            modelBuilder.Entity<Investment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Amount)
+                    .IsRequired();
+
+                entity.Property(e => e.Date)
+                    .IsRequired();
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.MaturityDate)
+                    .IsRequired();
+
+                entity.Property(e => e.InterestRate)
+                    .IsRequired();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired();
+
+                entity.HasOne(i => i.Product)
+                    .WithMany()
+                    .HasForeignKey(i => i.ProductId);
+            });
+
         }
     }
 }
