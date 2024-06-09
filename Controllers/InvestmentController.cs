@@ -16,9 +16,9 @@ namespace InvestmentPortfolioManagement.Controllers
         }
 
         [HttpGet("GetAllInvestmentsByCustomerId/{id}")]
-        public async Task<ActionResult<IEnumerable<InvestmentDto>>> GetAllInvestmentsByCustomerId(int id)
+        public async Task<ActionResult<IEnumerable<InvestmentDto>>> GetAllInvestmentsByCustomerId(int id, [FromQuery] bool? isActive)
         {
-            var investments = await _investmentService.GetAllInvestmentsByCustomerIdAsync(id);
+            var investments = await _investmentService.GetAllInvestmentsByCustomerIdAsync(id, isActive);
             return Ok(investments);
         }
 
