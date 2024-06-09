@@ -1,5 +1,5 @@
 using AutoMapper;
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Product;
 using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -26,10 +26,10 @@ namespace InvestmentPortfolioManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddProduct(ProductDto productDto)
+        public async Task<ActionResult> AddProduct([FromBody] ProductInsertDto productDto)
         {
-            await _productService.AddProductAsync(productDto);
-            return CreatedAtAction(nameof(GetAllProducts), new { id = productDto.Id }, productDto);
+            var result = await _productService.AddProductAsync(productDto);
+            return CreatedAtAction(nameof(GetAllProducts), new { id = result.Id }, result);
         }
 
         [HttpDelete("{id}")]
