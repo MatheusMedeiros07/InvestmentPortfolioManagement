@@ -62,7 +62,7 @@ namespace InvestmentPortfolioManagement.Data
                     .IsRequired();
 
                 entity.HasMany(e => e.Investment)
-                    .WithOne(i => i.Customer)
+                    .WithOne()
                     .HasForeignKey(i => i.CustomerId)
                     .OnDelete(DeleteBehavior.Cascade); // Define o relacionamento com Investment
             });

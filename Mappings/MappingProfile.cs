@@ -41,6 +41,16 @@ namespace InvestmentPortfolioManagement.Mappings
             });
 
             CreateMap<Investment, InvestmentDto>().ReverseMap();
+            CreateMap<InvestmentCreateDto, Investment>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+            //CreateMap<Investment, InvestmentDto>()
+            //    .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
+            //    .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product));
+
+
+
         }
     }
 }

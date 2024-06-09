@@ -9,14 +9,13 @@ namespace InvestmentPortfolioManagement.Entities
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
         public string Type { get; set; }
         public DateTime MaturityDate { get; set; }
         public decimal InterestRate { get; set; }
         public bool IsActive { get; set; } = true;
 
         public int ProductId { get; set; } // Chave estrangeira para Product
-        public Product Product { get; set; } // Navegação para Product
+        public Product? Product { get; set; } // Navegação para Product
     }
 
 

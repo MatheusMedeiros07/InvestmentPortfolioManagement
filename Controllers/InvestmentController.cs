@@ -15,7 +15,7 @@ namespace InvestmentPortfolioManagement.Controllers
             _investmentService = investmentService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetAllInvestmentsByCustomerId/{id}")]
         public async Task<ActionResult<IEnumerable<InvestmentDto>>> GetAllInvestmentsByCustomerId(int id)
         {
             var investments = await _investmentService.GetAllInvestmentsByCustomerIdAsync(id);
@@ -23,11 +23,37 @@ namespace InvestmentPortfolioManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddInvestment(InvestmentDto investmentDto)
+        public async Task<ActionResult> CreateInvestment([FromBody] InvestmentCreateDto investmentCreateDto)
         {
-            await _investmentService.AddInvestmentAsync(investmentDto);
-            return CreatedAtAction(nameof(AddInvestment), new { id = investmentDto.Id }, investmentDto);
+            try
+            {
+                var investment = await _investmentService.CreateInvestmentAsync(investmentCreateDto);
+                return CreatedAtAction(nameof(CreateInvestment), new { message = "Investimento realizado com sucesso!!" });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
+
+        [HttpPost("sell/{id}")]
+        public async Task<ActionResult<InvestmentDto>> SellInvestment(int id)
+        {
+            try
+            {
+                var investment = await _investmentService.SellInvestmentAsync(id);
+                return Ok(investment);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
 
     }
 }
