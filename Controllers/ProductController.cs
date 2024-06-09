@@ -18,11 +18,18 @@ namespace InvestmentPortfolioManagement.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             var products = await _productService.GetAllProductsAsync();
             return Ok(products);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductById(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            return Ok(product);
         }
 
         [HttpPost]

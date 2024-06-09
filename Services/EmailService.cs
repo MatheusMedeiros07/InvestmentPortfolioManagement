@@ -58,7 +58,6 @@ namespace InvestmentPortfolioManagement.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Error sending email: {ex.Message}");
-                // Log the exception or handle accordingly
             }
         }
 
