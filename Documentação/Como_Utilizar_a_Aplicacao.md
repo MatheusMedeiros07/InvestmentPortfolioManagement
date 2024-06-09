@@ -202,7 +202,7 @@ O serviço de e-mail é configurado no arquivo `appsettings.json`:
   "FromEmail": "your-email@example.com"
 }
 ```
-
+É necessário na classe de Serviço de E-Mail, colocar os E-Mails dos Administradores do sistema para recebimento dos emails de notificação.
 
 ### Exemplo de Configuração
 
