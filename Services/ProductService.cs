@@ -31,7 +31,7 @@ namespace InvestmentPortfolioManagement.Services
         {
             var product = await _productRepository.GetProductByIdAsync(id);
             if (product == null)
-                throw new ArgumentNullException($"O produto com ID: {id} não foi encontrado");
+                throw new KeyNotFoundException($"O produto com ID: {id} não foi encontrado");
 
             return _mapper.Map<ProductDto>(product);
         }
@@ -46,11 +46,11 @@ namespace InvestmentPortfolioManagement.Services
         {
             var existingProduct = await _productRepository.GetProductByIdAsync(id);
             if (existingProduct == null)
-                throw new ArgumentNullException($"O produto com ID: {id} não foi encontrado");
+                throw new KeyNotFoundException($"O produto com ID: {id} não foi encontrado");
 
             var productUpdate = _mapper.Map<Product>(productDto, opts => opts.Items["Id"] = id);
             var sucess = await _productRepository.EditProductAsync(existingProduct, productUpdate);
-            if (sucess)
+            if (!sucess)
                 throw new Exception("Erro ao atualizar o produto");
 
             return _mapper.Map<ProductDto>(await _productRepository.GetProductByIdAsync(id));

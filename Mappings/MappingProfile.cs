@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using InvestmentPortfolioManagement.Entities;
-using InvestmentPortfolioManagement.Dtos;
 using InvestmentPortfolioManagement.Dtos.Product;
+using InvestmentPortfolioManagement.Dtos.Customer;
+using InvestmentPortfolioManagement.Dtos.Investment;
 
 
 namespace InvestmentPortfolioManagement.Mappings
@@ -28,6 +29,17 @@ namespace InvestmentPortfolioManagement.Mappings
             });
 
             CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<CustomerInsertDto, Customer> ()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<CustomerUpdateDto, Customer>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())  
+            .AfterMap((src, dest, context) =>
+            {
+                var passedId = (int)context.Items["Id"];
+                dest.Id = passedId;
+            });
+
             CreateMap<Investment, InvestmentDto>().ReverseMap();
         }
     }

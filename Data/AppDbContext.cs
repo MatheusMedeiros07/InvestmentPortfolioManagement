@@ -34,6 +34,39 @@ namespace InvestmentPortfolioManagement.Data
                 entity.Property(e => e.Price)
                 .IsRequired();
             });
+
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.HasKey(e => e.Id); // Define a chave primária
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50); // Define o tamanho máximo
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Cpf)
+                    .IsRequired()
+                    .HasMaxLength(11);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Telefone)
+                    .HasMaxLength(15);
+
+                entity.Property(e => e.DataNascimento)
+                    .IsRequired();
+
+                entity.HasMany(e => e.Investment)
+                    .WithOne(i => i.Customer)
+                    .HasForeignKey(i => i.CustomerId)
+                    .OnDelete(DeleteBehavior.Cascade); // Define o relacionamento com Investment
+            });
+
         }
     }
 }

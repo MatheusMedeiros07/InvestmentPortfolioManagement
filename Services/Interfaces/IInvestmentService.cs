@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Investment;
 namespace InvestmentPortfolioManagement.Services.Interfaces
 {
     public interface IInvestmentService
