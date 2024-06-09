@@ -27,10 +27,11 @@ namespace InvestmentPortfolioManagement.Repositories
            return await _context.Products.FindAsync(productId);
         }
 
-        public async Task AddAsync(Product product)
+        public async Task<Product> AddAsync(Product product)
         {
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+            return product;
         }
 
         public async Task<bool> EditProductAsync(Product existingProduct, Product product)
