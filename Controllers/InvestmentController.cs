@@ -1,4 +1,4 @@
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Investment;
 using InvestmentPortfolioManagement.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

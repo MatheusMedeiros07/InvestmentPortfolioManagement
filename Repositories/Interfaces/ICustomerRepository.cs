@@ -8,6 +8,8 @@ namespace InvestmentPortfolioManagement.Repositories.Interfaces
     public interface ICustomerRepository
     {
         Task<IEnumerable<Customer>> GetAllAsync();
-        Task AddAsync(Customer customer);
+        Task<Customer> GetByIdAsync(int id);
+        Task<Customer> AddAsync(Customer customer);
+        Task<bool> EditAsync(Customer existingCustomer, Customer customer);
     }
 }

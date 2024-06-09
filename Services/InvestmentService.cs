@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using InvestmentPortfolioManagement.Dtos;
+using InvestmentPortfolioManagement.Dtos.Investment;
 using InvestmentPortfolioManagement.Entities;
 using InvestmentPortfolioManagement.Repositories;
 using InvestmentPortfolioManagement.Repositories.Interfaces;
@@ -9,7 +9,7 @@ using InvestmentPortfolioManagement.Services.Interfaces;
 
 namespace InvestmentPortfolioManagement.Services
 {
-  
+
     public class InvestmentService : IInvestmentService
     {
         private readonly IInvestmentRepository _investmentRepository;
